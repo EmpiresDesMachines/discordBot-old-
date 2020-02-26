@@ -91,7 +91,7 @@ bot.on('message', message => {
         })
         .then(result => {
             if (result.cod === 200) {
-                message.reply(`**Погода в ${result.name}:**\n Сейчас температура **${(result.main.temp).toFixed(1)} ℃**, ветер ${translateWindDirection(result.wind.deg)} **${result.wind.speed} м/с**, **${weatherDecription(result.weather[0].description)}** облачность[**${result.clouds.all}%**], влажность **${result.main.humidity}%**, давление **${(result.main.pressure / 1.333).toFixed(0)} мм**`);
+                message.reply(`**Погода в ${result.name}:**\n Сейчас температура **${(result.main.temp).toFixed(1)} ℃**, ветер ${translateWindDirection(result.wind.deg)} **${result.wind.speed} м/с**, **${weatherDecription(result.weather[0].description)}** [**${result.clouds.all}%**], влажность **${result.main.humidity}%**, давление **${(result.main.pressure / 1.333).toFixed(0)} мм**`);
             } else {
                 message.reply(`[${result.cod}] ${result.message}`);
             }
@@ -116,7 +116,7 @@ function translateWindDirection(deg) {
     } else if(deg > 236.5 && deg <= 292.5) {
         return ':arrow_right: **западный**';
     } else if(deg > 292.5 && deg <= 337.5) {
-        return 'arrow_lower_right: северо-западный';
+        return ':arrow_lower_right: северо-западный';
     }
 }
 
@@ -153,11 +153,7 @@ function weatherDecription(val) {
         'shower snow': 'метель :cloud_snow:',
         'heavy shower snow': 'сильная метель :cloud_snow:',
     };
-    if(data[val]) {
-        return data[val];
-    } else {
-        return val;
-    }
+    return data[val] || val;
 }
 
 function ball() {
